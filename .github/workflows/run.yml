@@ -2,7 +2,7 @@ name: check-in-action
 on:
   workflow_dispatch:
   schedule:
-    - cron: 50 8 * * *
+    - cron: 00 18 * * * # once a day at 18:00 UTC / 02:00 CST / CST = UTC + 8
 jobs:
   check-in-job:
     runs-on: ubuntu-latest
