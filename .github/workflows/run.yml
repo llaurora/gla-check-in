@@ -1,0 +1,23 @@
+name: check-in-action
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: 50 8 * * *
+jobs:
+  check-in-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.17.1
+          cache: 'npm'
+      - name: Install
+        run: npm install
+      - name: Run Clock
+        env:
+          GLADOS: ${{ secrets.GLADOS }}
+          NOTIFY: ${{ secrets.NOTIFY }}
+        run: npm run clock
