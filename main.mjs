@@ -54,7 +54,7 @@ const main = async () => {
         method: 'POST',
         data: {
           token,
-          content: result,
+          content: `${result},please try to update the cookie!`,
         },
         headers: {
           'Content-type': 'application/json;charset=UTF-8',
