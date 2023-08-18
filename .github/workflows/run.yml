@@ -2,7 +2,7 @@ name: check-in-action
 on:
   workflow_dispatch:
   schedule:
-    - cron: 00 18 * * * # once a day at 18:00 UTC / 02:00 CST / CST = UTC + 8
+    - cron: "${{ format('%02d %02d * * *', random(0, 59), random(17, 21)) }}"
 jobs:
   check-in-job:
     runs-on: ubuntu-latest
@@ -20,4 +20,12 @@ jobs:
         env:
           GLADOS: ${{ secrets.GLADOS }}
           NOTIFY: ${{ secrets.NOTIFY }}
-        run: npm run clock
+        run: |
+          npm run clock
+          if [ $? -eq 0 ]; then
+            output_time=$(date +"%Y-%m-%d %H:%M:%S")
+            echo "Task executed successfully at $output_time."
+          else
+            echo "Task execution failed."
+            exit 1
+          fi
