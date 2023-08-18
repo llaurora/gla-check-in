@@ -48,16 +48,19 @@ const main = async () => {
     if (!token) {
       return;
     }
-    await axios('http://www.pushplus.plus/send', {
-      method: 'POST',
-      data: {
-        token,
-        content: result,
-      },
-      headers: {
-        'Content-type': 'application/json;charset=UTF-8',
-      },
-    });
+    // Send notification only when check-in fails
+    if (result.startsWith(CHECK_IN_ERROR)) {
+      await axios('http://www.pushplus.plus/send', {
+        method: 'POST',
+        data: {
+          token,
+          content: result,
+        },
+        headers: {
+          'Content-type': 'application/json;charset=UTF-8',
+        },
+      });
+    }
   } catch (error) {
     console.log(error);
   }
